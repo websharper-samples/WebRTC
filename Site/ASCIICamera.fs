@@ -44,7 +44,7 @@ module ASCIICamera =
     let CreateObjectURL (stream : MediaStream) = X<string>
 
 
-    //Global references for the sze of the otuput
+    //Global references for the size of the otuput
     let private UserMedia = new UserMedia()
 
     let width = 120

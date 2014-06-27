@@ -111,10 +111,10 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="IntelliFactory.WebSharper.WebAudio">
-      <HintPath>..\packages\WebSharper.WebAudio.2.5.3.3\lib\net40\IntelliFactory.WebSharper.WebAudio.dll</HintPath>
+      <HintPath>..\packages\WebSharper.WebAudio.2.5.4.4\lib\net40\IntelliFactory.WebSharper.WebAudio.dll</HintPath>
     </Reference>
     <Reference Include="IntelliFactory.WebSharper.WebRTC">
-      <HintPath>..\packages\WebSharper.WebRTC.2.5.1.1\lib\net40\IntelliFactory.WebSharper.WebRTC.dll</HintPath>
+      <HintPath>..\packages\WebSharper.WebRTC.2.5.2.2\lib\net40\IntelliFactory.WebSharper.WebRTC.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />

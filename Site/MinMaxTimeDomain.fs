@@ -9,7 +9,7 @@ open IntelliFactory.WebSharper.JavaScript
 [<JavaScript>]
 module MinMaxTimeDomain =
     let context = new AudioContext ()
-    let javascriptNode = context.CreateScriptProcessor (1024u, 1u, 1u)
+    let javascriptNode = context.CreateScriptProcessor (1024, 1, 1)
 
     let ToList (from : Uint8Array) =
         let rec helper n res =
@@ -53,7 +53,7 @@ module MinMaxTimeDomain =
     let Analyser (stream : MediaStream) =
         let analyser = context.CreateAnalyser ()
         analyser.SmoothingTimeConstant <- 0.
-        analyser.FftSize <- 1024u
+        analyser.FftSize <- 1024
 
         //Workaroud for a bug in Chrome which makes the GC destroy 
         //the ScriptProcessorNode if it's not in global scope
