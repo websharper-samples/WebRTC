@@ -151,7 +151,11 @@ module ASCIICamera =
         let private video  = HTML5.Tags.Video [ Attr.Width <| string width; Attr.Height <| string height ]
         let private canvas = HTML5.Tags.Canvas [ Attr.Width <| string width; Attr.Height <| string height ]
 
-        let private asciiContainer = Pre []
+        let private style = "font-family: 'Courier New', 'Courier', monospace;\
+                             font-size: 10px;\
+                             line-height: 10px;"
+
+        let private asciiContainer = Pre [ Attr.Style style ]
         let private error = Div []
 
         let Draw (v : Video) =
