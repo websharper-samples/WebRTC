@@ -33,7 +33,7 @@
     <OutputType>Library</OutputType>
     <Name>Site</Name>
     <RootNamespace>WebRTCTest</RootNamespace>
-    <AssemblyName>MicrophoneVisualizer</AssemblyName>
+    <AssemblyName>WebRTCSamples</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <WarningLevel>3</WarningLevel>
   </PropertyGroup>
