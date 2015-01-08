@@ -3,8 +3,7 @@ namespace Site
 open IntelliFactory.WebSharper
 open IntelliFactory.WebSharper.JavaScript
 open IntelliFactory.WebSharper.JQuery
-open IntelliFactory.WebSharper.Html
-open IntelliFactory.WebSharper.Html5
+open IntelliFactory.WebSharper.Html.Client
 
 open System.Text
 
@@ -13,7 +12,7 @@ module ASCIICamera =
     
     type Video = {
         Video : HTMLVideoElement
-        Handle : Handle option
+        Handle : JS.Handle option
         Playing : bool
     }
 
@@ -35,10 +34,10 @@ module ASCIICamera =
     let SetupRequestAnimFrame () = X<unit>
 
     [<Inline "window.requestAnimFrame($callback)">]
-    let RequestAnimFrame (callback : unit -> unit) = X<Handle>
+    let RequestAnimFrame (callback : unit -> unit) = X<JS.Handle>
 
     [<Inline "window.cancelAnimFrame($id)">]
-    let CancelAnimFrame (id : Handle) = X<unit>
+    let CancelAnimFrame (id : JS.Handle) = X<unit>
 
     [<Inline "(window.URL && window.URL.createObjectURL($stream)) || $stream">]
     let CreateObjectURL (stream : MediaStream) = X<string>
@@ -148,8 +147,8 @@ module ASCIICamera =
                )
 
     module Application =
-        let private video  = HTML5.Tags.Video [ Attr.Width <| string width; Attr.Height <| string height ]
-        let private canvas = HTML5.Tags.Canvas [ Attr.Width <| string width; Attr.Height <| string height ]
+        let private video  = Video [ Attr.Width <| string width; Attr.Height <| string height ]
+        let private canvas = Canvas [ Attr.Width <| string width; Attr.Height <| string height ]
 
         let private style = "font-family: 'Courier New', 'Courier', monospace;\
                              font-size: 10px;\

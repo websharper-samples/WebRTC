@@ -1,7 +1,7 @@
 namespace Site
 
 open IntelliFactory.WebSharper
-open IntelliFactory.WebSharper.Html5
+open IntelliFactory.WebSharper.JavaScript
 
 [<JavaScript>]
 module AudioHolder =
