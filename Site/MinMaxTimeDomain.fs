@@ -1,9 +1,9 @@
 namespace Site
 
-open IntelliFactory.WebSharper
-open IntelliFactory.WebSharper.JQuery
-open IntelliFactory.WebSharper.Html.Client
-open IntelliFactory.WebSharper.JavaScript
+open WebSharper
+open WebSharper.JQuery
+open WebSharper.Html.Client
+open WebSharper.JavaScript
 
 [<JavaScript>]
 module MinMaxTimeDomain =
