@@ -115,7 +115,7 @@ module ASCIICamera =
             UserMedia.GetUserMedia(MediaStreamConstraints(true, false),
                     (fun stream ->
                             video.Src <- CreateObjectURL stream
-                    ), onNotSupprted)
+                    ), fun e -> onNotSupprted e)
 
             {
                 Video = video

@@ -79,7 +79,7 @@ module MinMaxTimeDomain =
         um.GetUserMedia(MediaStreamConstraints(false, true), 
                                (fun stream ->
                                     Analyser stream
-                               ), onNotSupported)
+                               ), fun e -> onNotSupported e)
 
     let Main (elem : Dom.Element) =
         AudioHolder.StopCurrent ()

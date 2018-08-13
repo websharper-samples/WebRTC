@@ -12,4 +12,6 @@ module Client =
             !+ ASCIICamera.Application.Sample
         ]
 
-    let Main = All.Show()
+    [<SPAEntryPoint>]
+    let Main() =
+        All.Show()
