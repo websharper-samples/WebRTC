@@ -3,7 +3,9 @@ namespace Site
 open WebSharper
 open WebSharper.JavaScript
 open WebSharper.JQuery
-open WebSharper.Html.Client
+open WebSharper.UI
+open WebSharper.UI.Html
+open WebSharper.UI.Client
 
 /// Support code for the sample catalog.
 [<JavaScript>]
@@ -70,25 +72,25 @@ module Samples =
     type Sample with
 
         member s.Show() =
-            let sMain = JS.Document.GetElementById("sample-main")
-            let sSide = JS.Document.GetElementById("sample-side")
+            let sMain = JS.Window.Document.GetElementById("sample-main")
+            let sSide = JS.Window.Document.GetElementById("sample-side")
             Clear sMain
             Clear sSide
             s.Render(sMain)
-            let url = "http://github.com/intellifactory/websharper.webrtc/blob/master/Site/" + s.FileName
-            let side =
-                Div [
-                    Div []
-                    |>! OnAfterRender (fun self ->
-                        match JS.Document.GetElementById(s.Id) with
+            let url = "http://github.com/intellifactory/websharper.babylonjs/blob/master/Site/" + s.FileName
+            Doc.Concat [
+                div [
+                    on.afterRender (fun self ->
+                        match JS.Window.Document.GetElementById(s.Id) with
                         | null -> ()
                         | el ->
                             let copy = el.CloneNode(true)
                             copy.Attributes.RemoveNamedItem("id") |> ignore
-                            self.Append(copy))
-                    A [Attr.Class "btn btn-primary btn-lg"; HRef url] -< [Text "Source"]
-                ]
-            side.AppendTo("sample-side")
+                            self.AppendChild(copy) |> ignore)
+                ] []
+                a [attr.``class`` "btn btn-primary btn-lg"; attr.href url] [text "Source"]
+            ]
+            |> Doc.RunAppendById "sample-side"
 
     type Set =
         private
@@ -100,17 +102,18 @@ module Samples =
         member s.Show() =
             JQuery.JQuery.Of(fun () ->
                 let (Set samples) = s
-                let doc = JS.Document
+                let doc = JS.Window.Document
                 let select (s: Sample) (dom: Dom.Element) =
                     let j = JQuery.Of("#sample-navs ul").Children("li").RemoveClass("active")
                     JQuery.Of(dom).AddClass("active").Ignore
                     s.Show()
-                let rec navs =
-                    UL [Attr.Class "nav nav-pills"] -< (
-                        samples
-                        |> List.mapi (fun i s ->
-                            LI [A [HRef "#"] -< [Text s.Title]]
-                            |>! OnAfterRender (fun self -> if i = 0 then select s self.Dom)
-                            |>! OnClick (fun self _ -> select s self.Dom))
-                    )
-                navs.AppendTo("sample-navs"))
+                ul [attr.``class`` "nav nav-pills"] [
+                    samples
+                    |> List.mapi (fun i s ->
+                        li [
+                            on.afterRender (fun self -> if i = 0 then select s self)
+                            on.click (fun self _ -> select s self)
+                        ] [a [attr.href "#"] [text s.Title]])
+                    |> Doc.Concat
+                ]
+                |> Doc.RunAppendById "sample-navs")

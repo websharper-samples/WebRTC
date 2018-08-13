@@ -1,9 +1,12 @@
 namespace Site
 
 open WebSharper
-open WebSharper.JQuery
-open WebSharper.Html.Client
 open WebSharper.JavaScript
+open WebSharper.JQuery
+open WebSharper.UI
+open WebSharper.UI.Notation
+open WebSharper.UI.Html
+open WebSharper.UI.Client
 
 [<JavaScript>]
 module MinMaxTimeDomain =
@@ -17,7 +20,7 @@ module MinMaxTimeDomain =
 
         helper (from.Length - 1) []
 
-    let CanvasEl = Canvas [ Width "800"; Height "256"; Attr.Style "background-color: black;" ]
+    let CanvasEl = Elt.canvas [attr.width "800"; attr.height "256"; attr.style "background-color: black;"] []
 
     let mutable column = 0.
 
@@ -84,16 +87,17 @@ module MinMaxTimeDomain =
     let Main (elem : Dom.Element) =
         AudioHolder.StopCurrent ()
 
-        let error = Div []
+        let error = Var.Create ""
+        error.View.Doc(function
+            | "" -> CanvasEl :> Doc
+            | err -> div [] [text err]
+        )
+        |> Doc.Run elem
+
         if not (As um.GetUserMedia) then
-            error.Text <- "Your browser does not support this feature!"                                                           
-            JQuery.Of(elem).Append(error.Dom) |> ignore
+            error := "Your browser does not support this feature!"                                                           
         else
-            JQuery.Of(elem).Append(CanvasEl.Dom) |> ignore
-            LoadSound <| fun e ->
-                            CanvasEl.SetCss("display", "none")
-                            error.Text <- "No microphone was found!"
-                            JQuery.Of(elem).Append(error.Dom) |> ignore
+            LoadSound <| fun e -> error := "No microphone was found!"
 
     let Sample =
         Samples.Build()

@@ -3,7 +3,10 @@ namespace Site
 open WebSharper
 open WebSharper.JavaScript
 open WebSharper.JQuery
-open WebSharper.Html.Client
+open WebSharper.UI
+open WebSharper.UI.Notation
+open WebSharper.UI.Html
+open WebSharper.UI.Client
 
 open System.Text
 
@@ -147,38 +150,37 @@ module ASCIICamera =
                )
 
     module Application =
-        let private video  = Video [ Attr.Width <| string width; Attr.Height <| string height ]
-        let private canvas = Canvas [ Attr.Width <| string width; Attr.Height <| string height ]
+        let private video  = Elt.video [attr.width <| string width; attr.height <| string height] []
+        let private canvas = Elt.canvas [attr.width <| string width; attr.height <| string height] []
 
         let private style = "font-family: 'Courier New', 'Courier', monospace;\
                              font-size: 10px;\
                              line-height: 10px;"
 
-        let private asciiContainer = Pre [ Attr.Style style ]
-        let private error = Div []
+        let private txt = Var.Create ""
 
         let Draw (v : Video) =
             let video = v.Video
-            let context = (As<CanvasElement> canvas.Body).GetContext("2d");
+            let context = (As<CanvasElement> canvas.Dom).GetContext("2d");
             context.DrawImage(As video, 0., 0., float video.Width, float video.Height)
-            asciiContainer.Html <- Ascii.AsciiFromCanvas(As canvas.Body)
+            txt := Ascii.AsciiFromCanvas(As canvas.Dom)
 
         let Main (elem : Dom.Element) =
             AudioHolder.StopCurrent()
             
             SetupRequestAnimFrame ()
-            JQuery.Of(elem).Append(asciiContainer.Dom).Ignore
+            let error = Var.Create ""
+            let asciiContainer = pre [attr.style style] [text txt.V]
+            error.View.Doc(function
+                | "" -> asciiContainer
+                | err -> div [] [text err]
+            )
+            |> Doc.Run elem
 
             if not (As UserMedia.GetUserMedia) then
-                error.Text <- "Your browser does not support this feature!"                                                           
-                asciiContainer.SetCss("display", "none")
-                JQuery.Of(elem).Append(error.Dom).Ignore
+                error := "Your browser does not support this feature!"
             else
-                Camera.InitVideoStream <| As (video.Body) <| (fun e -> 
-                                                                asciiContainer.SetCss("display", "none")
-                                                                error.Text <- "No camera was found!"                                                           
-                                                                JQuery.Of(elem).Append(error.Dom).Ignore
-                                                             )
+                Camera.InitVideoStream (As video.Dom) (fun e -> error := "No camera was found!")
                 |> Camera.Start Draw
                 |> ignore
             
