@@ -1,4 +1,4 @@
-# websharper.webrtc [![Build status](https://ci.appveyor.com/api/projects/status/gomsbamjr6ivdkwb)](https://ci.appveyor.com/project/Jand42/websharper-webrtc)
+# websharper.webrtc [![Build status](https://ci.appveyor.com/api/projects/status/jw6oen31wei01r0w?svg=true)](https://ci.appveyor.com/project/IntelliFactory/websharper-webrtc-samples)
 
 [Samples][samp] for [WebSharper][ws] bindings to WebRTC.
 
