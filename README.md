@@ -5,5 +5,5 @@
 
 Please note that these features are rather new and not supported in every browser.
 
-[samp]: http://intellifactory.github.io/websharper.webrtc.samples
-[ws]: http://websharper.com/
+[samp]: https://intellifactory.github.io/websharper.webrtc.samples
+[ws]: https://websharper.com/
