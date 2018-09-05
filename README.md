@@ -5,5 +5,5 @@
 
 Please note that these features are rather new and not supported in every browser.
 
-[samp]: https://dotnet-websharper.github.io/WebRTC
+[samp]: https://websharper-samples.github.io/WebRTC
 [ws]: https://websharper.com/
